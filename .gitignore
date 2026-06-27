@@ -1,0 +1,40 @@
+# ambiente virtual
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# distribuição / build
+build/
+dist/
+*.egg-info/
+
+# variáveis de ambiente
+.env
+.env.*
+
+# dados do pipeline
+data/raw/
+data/processed/
+data/exports/
+
+# logs
+*.log
+
+# notebooks (se usar Jupyter)
+.ipynb_checkpoints/
+
+# IDEs
+.vscode/
+.idea/
+
+# sistema operacional
+.DS_Store
+Thumbs.db
+
+# Docker (opcional, mas comum ignorar alguns artefatos locais)
+docker-compose.override.yml
