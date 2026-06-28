@@ -25,8 +25,11 @@ data/exports/
 # logs
 *.log
 
-# notebooks (se usar Jupyter)
+# notebooks
 .ipynb_checkpoints/
+
+# anotações pessoais
+notes/
 
 # IDEs
 .vscode/
