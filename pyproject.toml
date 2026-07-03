@@ -1,0 +1,10 @@
+[project]
+name = "anime-pipeline"
+version = "0.1.0"
+description = "Anime Pipeline using the Jikan API"
+requires-python = ">=3.12"
+
+dependencies = [
+    "requests",
+    "python-dotenv",
+]
