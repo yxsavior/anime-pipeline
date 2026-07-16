@@ -16,7 +16,7 @@ class Settings:
     # API
     BASE_URL = "https://api.jikan.moe/v4"
     REQUEST_TIMEOUT = 30
-    REQUEST_DELAY = 1  # Delay in seconds between requests to avoid rate limiting
+    REQUEST_DELAY = 3
     MAX_PAGES = 40
 
     # Directories

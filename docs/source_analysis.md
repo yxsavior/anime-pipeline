@@ -1,77 +1,94 @@
-## Fonte
-API: Jikan REST API
+## Data Source
 
-Base URL:
+**API:** Jikan REST API
+
+**Base URL:**
 https://api.jikan.moe/v4/
 
-### Motivos da escolha
-- API pública e gratuita.
-- Não exige autenticação.
-- Dados em formato JSON.
-- Possui paginação.
-- Possui múltiplas entidades relacionadas.
-- Permite demonstrar ingestão, transformação, modelagem relacional e carga em banco de dados.
+## Why Jikan API?
 
-## Endpoint utilizado
-GET /top/anime
+- Public and free API.
+- No authentication required.
+- Returns data in JSON format.
+- Supports pagination.
+- Provides multiple related entities.
+- Suitable for demonstrating data ingestion, transformation, relational modeling, and database loading.
 
-Este endpoint retorna uma lista paginada dos animes mais bem classificados no MyAnimeList.
+## Endpoint
 
-Foi escolhido porque fornece, em uma única resposta, todas as entidades necessárias para o MVP:
+**GET /top/anime**
+
+This endpoint returns a paginated list of the highest-ranked anime on MyAnimeList.
+
+It was selected because it provides all entities required for the MVP in a single response:
 
 - Anime
 - Genres
 - Studios
 - Themes
 
-Sem necessidade de realizar milhares de requisições individuais para `/anime/{id}`.
+This avoids performing thousands of individual requests to `/anime/{id}`.
 
-## Estrutura da resposta
-A resposta possui dois elementos principais:
+## Response Structure
 
-- data: lista de animes retornados na página.
-- pagination: informações necessárias para percorrer todas as páginas
+Each response contains two main sections:
 
-## Paginação
-O pipeline continuará realizando requisições enquanto
-`has_next_page == true`.
+- **data**: list of anime returned for the current page.
+- **pagination**: metadata required to retrieve the remaining pages.
 
-## Rate limit
-O pipeline utilizará um intervalo entre requisições para permanecer abaixo do limite da API e reduzir a chance de respostas HTTP 429.
+## Pagination
 
-## Entidades
-| Entidade | Origem       |
-| -------- | ------------ |
-| Anime    | data         |
-| Genre    | data.genres  |
-| Studio   | data.studios |
-| Theme    | data.themes  |
+The pipeline continues requesting pages while:
 
-## Campos utilizados
+`has_next_page == true`
+
+## Rate Limiting
+
+The pipeline applies a delay between requests to stay below the API rate limit and reduce the likelihood of receiving HTTP 429 (Too Many Requests).
+
+## Entities
+
+| Entity | JSON Path |
+|---------|-----------|
+| Anime | `data[]` |
+| Genre | `data[].genres[]` |
+| Studio | `data[].studios[]` |
+| Theme | `data[].themes[]` |
+
+## Fields Used
+
 ### Anime
+
 - mal_id
 - title
 - type
 - episodes
 - status
 - score
+- scored_by
 - season
 - year
+- rating
 
 ### Genre
+
 - mal_id
 - name
 
 ### Studio
+
 - mal_id
 - name
 
 ### Theme
+
 - mal_id
 - name
 
-## Campos fora do escopo
-Os seguintes campos não serão utilizados nesta versão:
+## Out of Scope
+
+The following fields are not used in this version:
+
 - images
 - trailer
 - synopsis
@@ -81,22 +98,27 @@ Os seguintes campos não serão utilizados nesta versão:
 - demographics
 - explicit_genres
 
-Motivos:
-- não participam da modelagem relacional proposta;
-- não agregam valor às consultas SQL do MVP;
-- aumentariam a complexidade sem contribuir para os objetivos de aprendizagem.
+Reasons:
 
-## Observações importantes
-Os identificadores (mal_id) não são contínuos.
-Durante a exploração da API foram encontrados diversos recursos inexistentes que retornam HTTP 404.
-Por esse motivo, a ingestão utilizará o endpoint `/top/anime` com paginação, em vez de iterar sobre identificadores individuais.
+- They are not part of the proposed relational model.
+- They do not add value to the analytical SQL queries.
+- They increase implementation complexity without contributing to the learning objectives.
 
-## Decisões tomadas
-- Utilizar `/top/anime` como fonte de ingestão.
-- Utilizar paginação para percorrer os registros.
-- Preservar o JSON original na camada Bronze.
-- Utilizar `mal_id` como chave natural.
-- Modelar apenas Anime, Genre, Studio e Theme.
-- Manter personagens, reviews e demais entidades fora do MVP.
-- Utilizar PostgreSQL como camada Silver.
-- Produzir consultas analíticas diretamente em SQL na camada Gold.
+## Observations
+
+`mal_id` values are not sequential.
+
+During the source analysis, multiple non-existent resources returning HTTP 404 were identified.
+
+For this reason, the pipeline retrieves data from the `/top/anime` endpoint using pagination instead of iterating over individual anime IDs.
+
+## Design Decisions
+
+- Use `/top/anime` as the ingestion source.
+- Retrieve data using pagination.
+- Preserve the original JSON responses in the Bronze layer.
+- Use `mal_id` as the natural key.
+- Model only Anime, Genre, Studio, Theme, and their relationships.
+- Keep characters, reviews, recommendations, and other entities outside the MVP scope.
+- Store the relational model in PostgreSQL (Silver layer).
+- Perform analytical queries directly in SQL (Gold layer).
