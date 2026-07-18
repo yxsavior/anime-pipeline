@@ -1,8 +1,9 @@
 import json
 from pathlib import Path
+
 from src.config import settings
 
-def transform(date):
+def transform_data(date):
 
     # localizar os arquivos da Bronze
     json_folder_path = Path(settings.RAW_DATA_DIR) / date
@@ -56,7 +57,6 @@ def transform(date):
 
                 if genre_id not in genre_ids:
                     genres.append({"mal_id": genre_id, "name": genre["name"]})
-
                     genre_ids.add(genre_id)
 
                 # lista de anime_genres -> tabela anime_genre
@@ -70,7 +70,6 @@ def transform(date):
 
                 if theme_id not in theme_ids:
                     themes.append({"mal_id": theme_id, "name": theme["name"]})
-
                     theme_ids.add(theme_id)
 
                 # lista de anime_themes -> tabela anime_theme
@@ -84,7 +83,6 @@ def transform(date):
 
                 if studio_id not in studio_ids:
                     studios.append({"mal_id": studio_id, "name": studio["name"]})
-
                     studio_ids.add(studio_id)
 
                 # lista de anime_studios -> tabela anime_studio
