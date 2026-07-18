@@ -1,3 +1,8 @@
+from pathlib import Path
+
+from src.config import settings
+from src.utils.storage import save_json_file
+
 """Bloco de validações seguindo a lógica de validação de dados do validation.ipynb.
 Cada função é responsável por validar um aspecto específico dos dados transformados."""
 
@@ -94,7 +99,7 @@ def validate(transformed_data):
 # -------------------------------------------------------------------------------------------------------------------------
 """Bloco de resumo dos resultados de validação.
 Imprime no console o total de registros e o total de registros inválidos por chave."""
-def validation_summary(transformed_data):
+def print_validation_report(transformed_data):
     validation_results = validate(transformed_data)
     for key, data in validation_results.items():
         print(f"\nKey: {key}")
@@ -109,3 +114,15 @@ def validation_summary(transformed_data):
         print("\nDuplicates found:")
         for anime in validation_results['duplicates']['animes']['invalids']:
             print(f"mal_id: {anime['mal_id']} | Title: {anime['title']}")
+
+# -------------------------------------------------------------------------------------------------------------------------      
+"""Salva os dados prontos pro PostgreSQL em data/processed."""
+def save_validated_data(transformed_data, date):
+    output_dir = Path(settings.PROCESSED_DATA_DIR) / date
+    
+    for table_name, records in transformed_data.items():
+        save_json_file(
+            data=records,
+            directory=output_dir,
+            filename=f"{table_name}.json"
+        )
