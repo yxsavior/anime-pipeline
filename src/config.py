@@ -14,7 +14,7 @@ class Settings:
     POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 
     # API
-    BASE_URL = "https://api.jikan.moe/v4"
+    BASE_URL = "https://api.tenrai.org/v1"
     REQUEST_TIMEOUT = 30
     REQUEST_DELAY = 3
     MAX_PAGES = 40
@@ -22,6 +22,7 @@ class Settings:
     # Directories
     PROJECT_ROOT = Path(__file__).resolve().parent.parent
     RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw"
+    PROCESSED_DATA_DIR = PROJECT_ROOT / "data" / "processed"
 
     @property
     def DATABASE_URL(self):
