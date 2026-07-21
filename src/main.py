@@ -1,4 +1,5 @@
 import logging
+from datetime import date
 
 from src.ingestion.extract import extract_api_data
 from src.transformation.transform import transform_data
@@ -10,11 +11,11 @@ def main():
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
 
-    TARGET_DATE = '2026-07-18'
+    TARGET_DATE = date.today().isoformat() # formato: '2026-07-20'
     
     # ingestão (salva em data/raw com a data de hoje)
     logging.info("Step 1: Extracting data from API...")
-    # extract_api_data()
+    extract_api_data()
     
     # transformação (lê dados de uma pasta específica em data/raw)
     logging.info(f"Step 2: Transforming raw data for date: {TARGET_DATE}")
