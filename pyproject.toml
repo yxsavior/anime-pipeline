@@ -1,16 +1,18 @@
 [project]
 name = "anime-pipeline"
 version = "0.1.0"
-description = "Anime Pipeline using the Jikan API"
+description = "Anime Pipeline using the Tenrai API"
 requires-python = ">=3.12"
 
 dependencies = [
     "requests",
     "python-dotenv",
+    "psycopg[binary]",
 ]
 
 [dependency-groups]
 dev = [
+    "jupyter",
     "ruff",
 ]
 
