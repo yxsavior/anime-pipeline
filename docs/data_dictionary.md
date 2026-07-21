@@ -6,7 +6,7 @@
 | `mal_id`    | INTEGER | Unique MyAnimeList identifier. Natural key of the table      |
 | `title`     | TEXT    | Primary title of the anime                                   |
 | `episodes`  | INTEGER | Total number of episodes                                     |
-| `score`     | REAL    | Average user rating                                          |
+| `score`     | NUMERIC | Average user rating                                          |
 | `scored_by` | INTEGER | Number of users who rated the anime                          |
 | `year`      | INTEGER | Release year                                                 |
 | `season`    | TEXT    | Release season (`winter`, `spring`, `summer`, or `fall`)     |
