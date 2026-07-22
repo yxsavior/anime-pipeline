@@ -15,28 +15,10 @@ Pipeline de Engenharia de Dados desenvolvido em Python para ingestão, transform
 └─────┬──────┘
       │
       ▼
-┌────────────┐
-│ Bronze     │
-│ Raw JSON   │
-└─────┬──────┘
-      │
-      ▼
-┌────────────┐
-│ Transform  │
-│ Validation │
-└─────┬──────┘
-      │
-      ▼
-┌────────────┐
-│ Silver     │
-│ PostgreSQL │
-└─────┬──────┘
-      │
-      ▼
-┌────────────┐
-│ Gold       │
-│ Analytics  │
-└────────────┘
+┌────────────┐      ┌────────────────────┐      ┌────────────────┐      ┌────────────┐      ┌────────────┐
+│ Bronze     │ ───> │ Transformation     │ ───> │ Processed      │ ───> │ Silver     │ ───> │ Gold       │
+│ Raw JSON   │      │  Validation        │      │     JSON       │      │ PostgreSQL │      │ Analytics  │
+└────────────┘      └────────────────────┘      └────────────────┘      └────────────┘      └────────────┘
 ```
 
 ## Funcionalidades implementadas
