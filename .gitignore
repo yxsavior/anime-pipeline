@@ -15,7 +15,9 @@ dist/
 
 # variáveis de ambiente
 .env
-.env.*
+.env.local
+.env.development
+.env.production
 
 # dados do pipeline
 data/raw/
@@ -39,5 +41,5 @@ notes/
 .DS_Store
 Thumbs.db
 
-# Docker (opcional, mas comum ignorar alguns artefatos locais)
+# Docker (opcional)
 docker-compose.override.yml
